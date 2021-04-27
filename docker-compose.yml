@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  avocado_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: avocado
+      POSTGRES_PASSWORD: avocado
+    volumes:
+      - ./database/data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
