@@ -89,3 +89,34 @@ Each parameter must be defined with keys `{column, type, value}`.  Supported ope
         "category": "organic"
     }
 }
+```
+
+## Delete
+
+The delete job type removes all rows from the database which match given parameters.
+
+#### Requirements:
+
+The delete job accepts a list of parameters `params` and new data `data`.
+
+Each parameter must be defined with keys `{column, type, value}`.  Supported operators are `equals, greater_than, greater_equal, less_than, less_equal`.
+
+#### Examples:
+
+```
+{
+    "job_type": "delete",
+    "status": "submitted",
+    "params": [{
+        "column": "year",
+        "type": "equals",
+        "value": 2012
+        },
+        {
+        "column": "category",
+        "type": "equals",
+        "value": "organic"
+        }
+    ]
+}
+```
