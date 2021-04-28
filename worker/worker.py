@@ -22,11 +22,20 @@ def run_job(job):
         return job
 
     if job_type == "query":
-        #try:
-        data = database.get(job['cols'], job['params'])
-        job = __update_job(job, {"status": "success", "data": data })
-        #except Exception as error:
-        #    job = __update_job(job, {"status": "failed", "error": str(error)})
+        try:
+            data = database.get(job['cols'], job['params'])
+            job = __update_job(job, {"status": "success", "data": data })
+        except Exception as error:
+            job = __update_job(job, {"status": "failed", "error": str(error)})
+
+        return job
+
+    if job_type == "update":
+        try:
+            data = database.update(job['data'], job['params'])
+            job = __update_job(job, {"status": "success"})
+        except Exception as error:
+            job = __update_job(job, {"status": "failed", "error": str(error)})
 
         return job
     
@@ -51,7 +60,7 @@ if __name__ == '__main__':
         "data": data
     }
 
-    print(json.dumps(run_job(job), indent=4))
+    # print(json.dumps(run_job(job), indent=4))
     
     job = {
         "job_type": "query",
@@ -63,10 +72,28 @@ if __name__ == '__main__':
             "value": 2012
             },
             {
-            "column": "volume",
-            "type": "equals",
-            "value": 2
+            "column": "total_4046",
+            "type": "less_than",
+            "value": 433
             }]
     }
-    print (json.dumps(run_job(job), indent=4))
-        
+    
+    # print (json.dumps(run_job(job), indent=4))
+
+    job = {
+        "job_type": "update",
+        "status": "submitted",
+        "params": [
+            {
+            "column": "year",
+            "type": "equals",
+            "value" : 2012
+            }
+        ],
+        "data": {
+            "volume": 74,
+            "category": "transitional"
+        }
+    }
+
+    print( json.dumps( run_job(job), indent=4 ) )
