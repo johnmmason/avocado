@@ -44,3 +44,6 @@ def run_job(job):
         job = __update_job(job, {"status": "success"})
 
         return job
+
+    else:
+        return __update_job(job, {"status": "failed", "error": "unknown job type"})
