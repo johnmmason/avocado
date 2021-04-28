@@ -1,5 +1,6 @@
 import psycopg2
 from psycopg2.extensions import AsIs
+import json
 
 PG_HOST = 'localhost'
 PG_USER = 'avocado'
@@ -18,6 +19,31 @@ def __map_dict(rows, cols):
             row_dict[cols[i]] = row[i]
         rows_list.append(row_dict)
     return rows_list
+
+def __build_query(params):
+
+    first_key = True
+    for param in params:
+        if first_key:
+            KEY_QUERY = ' WHERE '
+            first_key = False
+        else:
+            KEY_QUERY = KEY_QUERY + ' AND '
+            
+        if param['type'] == 'equals':
+            KEY_QUERY = KEY_QUERY + param['column'] + " = " + str(param['value'])
+        elif param['type'] == 'greater_than':
+            KEY_QUERY = KEY_QUERY + param['column'] + " > " + str(param['value'])
+        elif param['type'] == 'greater_equal':
+            KEY_QUERY = KEY_QUERY + param['column'] + " >= " + str(param['value'])
+        elif param['type'] == 'less_than':
+            KEY_QUERY = KEY_QUERY + param['column'] + " < " + str(param['value'])
+        elif param['type'] == 'less_equal':
+            KEY_QUERY = KEY_QUERY + param['column'] + " <= " + str(param['value'])
+        else:
+            raise Exception
+
+    return KEY_QUERY
 
 def insert(data):
     conn = psycopg2.connect(
@@ -54,23 +80,38 @@ def get(cols, params):
         cols = '*'
     
     SQL = 'SELECT {} FROM avocado'.format(AsIs(','.join(cols)))
+    SQL = SQL + __build_query(params)
 
-    first_key = True
-    for param in params:
-        if first_key:
-            KEY_QUERY = ' WHERE '
-            first_key = False
-        else:
-            KEY_QUERY = KEY_QUERY + ' AND '
-        if param['type'] == 'equals':
-            KEY_QUERY = KEY_QUERY + param['column'] + " = " + str(param['value'])
-        else:
-            raise Exception
-
-    cursor.execute(SQL+KEY_QUERY)
+    cursor.execute(SQL)
     data = __map_dict(cursor.fetchall(), cols)
 
     cursor.close()
     conn.commit()
-
+    conn.close()
+    
     return data
+
+def update(data, params):
+    conn = psycopg2.connect(
+        host=PG_HOST,
+        dbname=PG_DATABASE,
+        user=PG_USER,
+        password=PG_PASSWORD
+    )
+    cursor = conn.cursor()
+
+    SQL = 'UPDATE avocado SET '
+    
+    keys = list( data.keys() )
+    for i in range(0, len(data)):
+        SQL = SQL + keys[i] + " = '" + str(data[ keys[i] ]) + "'"
+        if i < len(data)-1:
+            SQL = SQL + ", "
+        
+    SQL = SQL + __build_query(params)
+
+    cursor.execute(SQL)
+
+    cursor.close()
+    conn.commit()
+    conn.close()
