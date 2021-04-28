@@ -1,32 +1,59 @@
-NAME ?= phart
+NSPACE="phart"
+APP="avocado-app-test"
+VER="0.0.1"
 
-all: ps-me im-me
+list-targets:
+	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
-im-me:
-	docker images | grep ${NAME}
-ps-me:
-	docker ps -a | grep ${NAME}
-build-worker:
-	docker build -f <dockerfile path>  -t <tagname:version> .
-
-build-all: build-worker build-api build-db
-
-
-run-wrk: build-wrk
-	docker run --name <name> --network <docker bridge networking> -p <my redis port>:6379 -d --env REDIS_IP=<name> -u <> -v ${PWD}/data:/data <name of image>
-
-run-all: run-db run-api run-wrk
-
+build-db:
+	docker build -t ${NSPACE}/${APP}-db:${VER} \
+                     -f docker/Dockerfile.db \
+                     ./
+build-api:
+	docker build -t ${NSPACE}/${APP}-api:${VER} \
+                     -f docker/Dockerfile.api \
+                     ./
+build-wrk:
+	docker build -t ${NSPACE}/${APP}-wrk:${VER} \
+                     -f docker/Dockerfile.wrk \
+                     ./
 
 
-clean-wrk:
-	docker rm -f <contianer name>
+test-db: build-db
+	docker run --name ${NSPACE}-db \
+                   -p 6392:6379 \
+                   -d \
+                   -u 827385:815499 \
+                   -v ${PWD}/data/:/data \
+                   ${NSPACE}/${APP}-db:${VER}
+
+test-api: build-api
+	docker run --name ${NSPACE}-api \
+                   --env REDIS_IP=${NSPACE}-db \
+                   -p 5012:5000 \
+                   -d \
+                   ${NSPACE}/${APP}-api:${VER}
+
+test-wrk: build-wrk
+	docker run --name ${NSPACE}-wrk \
+                   --env REDIS_IP=${NSPACE}-db \
+                   -d \
+                   ${NSPACE}/${APP}-wrk:${VER}
+
 
 clean-db:
-	docker rm -f <container name>
+	docker ps -a | grep ${NSPACE}-db | awk '{print $$1}' | xargs docker rm -f
 
 clean-api:
-	docker rm -f <container name>
+	docker ps -a | grep ${NSPACE}-api | awk '{print $$1}' | xargs docker rm -f
 
+clean-wrk:
+	docker ps -a | grep ${NSPACE}-wrk | awk '{print $$1}' | xargs docker rm -f
+
+
+
+build-all: build-db build-api build-wrk
+
+test-all: test-db test-api test-wrk
 
 clean-all: clean-db clean-api clean-wrk
