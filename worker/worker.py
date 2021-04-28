@@ -21,7 +21,7 @@ def run_job(job):
             
         return job
 
-    if job_type == "query":
+    elif job_type == "query":
         try:
             data = database.get(job['cols'], job['params'])
             job = __update_job(job, {"status": "success", "data": data })
@@ -30,12 +30,18 @@ def run_job(job):
 
         return job
 
-    if job_type == "update":
+    elif job_type == "update":
         try:
-            data = database.update(job['data'], job['params'])
+            database.update(job['data'], job['params'])
             job = __update_job(job, {"status": "success"})
         except Exception as error:
             job = __update_job(job, {"status": "failed", "error": str(error)})
+
+        return job
+
+    elif job_type == "delete":
+        database.delete(job['params'])
+        job = __update_job(job, {"status": "success"})
 
         return job
     
@@ -92,8 +98,31 @@ if __name__ == '__main__':
         ],
         "data": {
             "volume": 74,
-            "category": "transgender"
+            "category": "transitional"
         }
     }
 
-    print( json.dumps( run_job(job), indent=4 ) )
+    # print( json.dumps( run_job(job), indent=4 ) )
+
+    job = {
+        "job_type": "delete",
+        "status": "submitted",
+        "params": [{
+            "column": "year",
+            "type": "equals",
+            "value": 2012
+            },
+            {
+            "column": "total_4046",
+            "type": "less_than",
+            "value": 701
+            },
+            {
+            "column": "category",
+            "type": "equals",
+            "value": "transitional"
+            }
+            ]
+    }
+
+    print( json.dumps( run_job(job), indent =4 ) )

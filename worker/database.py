@@ -31,15 +31,15 @@ def __build_query(params):
             KEY_QUERY = KEY_QUERY + ' AND '
             
         if param['type'] == 'equals':
-            KEY_QUERY = KEY_QUERY + param['column'] + " = " + str(param['value'])
+            KEY_QUERY = KEY_QUERY + param['column'] + " = '" + str(param['value']) + "'"
         elif param['type'] == 'greater_than':
-            KEY_QUERY = KEY_QUERY + param['column'] + " > " + str(param['value'])
+            KEY_QUERY = KEY_QUERY + param['column'] + " > '" + str(param['value']) + "'"
         elif param['type'] == 'greater_equal':
-            KEY_QUERY = KEY_QUERY + param['column'] + " >= " + str(param['value'])
+            KEY_QUERY = KEY_QUERY + param['column'] + " >= '" + str(param['value']) + "'"
         elif param['type'] == 'less_than':
-            KEY_QUERY = KEY_QUERY + param['column'] + " < " + str(param['value'])
+            KEY_QUERY = KEY_QUERY + param['column'] + " < '" + str(param['value']) + "'"
         elif param['type'] == 'less_equal':
-            KEY_QUERY = KEY_QUERY + param['column'] + " <= " + str(param['value'])
+            KEY_QUERY = KEY_QUERY + param['column'] + " <= '" + str(param['value']) + "'"
         else:
             raise Exception
 
@@ -73,11 +73,6 @@ def get(cols, params):
         password=PG_PASSWORD
     )
     cursor = conn.cursor()
-
-    if cols:
-        pass
-    else:
-        cols = '*'
     
     SQL = 'SELECT {} FROM avocado'.format(AsIs(','.join(cols)))
     SQL = SQL + __build_query(params)
@@ -115,3 +110,22 @@ def update(data, params):
     cursor.close()
     conn.commit()
     conn.close()
+
+def delete(params):
+    conn = psycopg2.connect(
+        host=PG_HOST,
+        dbname=PG_DATABASE,
+        user=PG_USER,
+        password=PG_PASSWORD
+    )
+    cursor = conn.cursor()
+    
+    SQL = 'DELETE FROM avocado'
+    SQL = SQL + __build_query(params)
+
+    cursor.execute(SQL)
+
+    cursor.close()
+    conn.commit()
+    conn.close()
+    
