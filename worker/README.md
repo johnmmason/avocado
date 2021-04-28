@@ -4,8 +4,13 @@ Currently, the following jobs are accepted:
 
 ## Insert
 
-Note: all columns are required in the data field.
+The insert job type adds a single row to the database.
 
+#### Requirements:
+
+A parameter `data` with a key-value dictionary of all columns in the table and the values to be added.
+
+#### Example:
 ```
 {
     "job_type": "insert",
@@ -27,9 +32,16 @@ Note: all columns are required in the data field.
 
 ## Query
 
+The query job type retrieves a subset of the database matching given parameters.
+
+#### Requirements:
+
 The query job accepts a list of colums `cols` and a list of parameters `params`.
 
-Each parameter must be defined with keys `{column, type, value}`.  Currently, the only supported type is `{equals}`.
+Each parameter must be defined with keys `{column, type, value}`.  Supported operators are `equals, greater_than, greater_equal, less_than, less_equal`.
+
+#### Example:
+
 
 ```
 {
@@ -42,9 +54,38 @@ Each parameter must be defined with keys `{column, type, value}`.  Currently, th
         "value": 2012
         },
         {
-        "column": "volume",
-        "type": "equals",
-        "value": 2
+        "column": "total_4046",
+        "type": "less_equal",
+        "value": 700
         }]
 }
 ```
+
+## Update
+
+The update job type modifies a subset of the database matching given parameters.
+
+#### Requirements:
+
+The update job accepts a list of parameters `params` and new data `data`.
+
+Each parameter must be defined with keys `{column, type, value}`.  Supported operators are `equals, greater_than, greater_equal, less_than, less_equal`.
+
+#### Example:
+
+```
+{
+    "job_type": "update",
+    "status": "submitted",
+    "params": [
+        {
+        "column": "year",
+        "type": "equals",
+        "value": 2012
+        }
+    ],
+    "data": {
+        "volume": 5,
+        "category": "organic"
+    }
+}
