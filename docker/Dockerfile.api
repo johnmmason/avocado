@@ -6,6 +6,5 @@ WORKDIR /app
 RUN ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
 RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["python3"]
 CMD ["python3", "/app/api.py"]
 
