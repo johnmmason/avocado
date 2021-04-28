@@ -13,7 +13,6 @@ def __map_dict(rows, cols):
     rows_list = []
     
     for row in rows:
-        print( type(row) )
         row_dict = {}
         for i in range(0, len(cols)):
             row_dict[cols[i]] = row[i]
