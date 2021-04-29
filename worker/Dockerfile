@@ -5,4 +5,4 @@ WORKDIR /app
 RUN ln -sf /usr/share/zoneinfo/America/Chicago /etc/localtime
 RUN pip3 install -r requirements.txt
 
-CMD ["python3", "/app/worker.py"]
+CMD ["python3", "-u", "/app/worker.py"]

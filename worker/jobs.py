@@ -48,11 +48,17 @@ def add_job(data):
     _queue_job(jid)
     return data
 
-def update_job(jid, startFin, data): # startFin is a string either 'start' or 'end'
+def get_job(jid):
+    jid = _generate_job_key(jid)
+    job = json.loads( rd.get(jid).decode('utf-8') )
+    return job
+
+def update_job(job, params): # startFin is a string either 'start' or 'end'
     """Update the status of job with job id `jid` to status `status`."""
-    # update start or end timestamp
-    data[startFin] = str(datetime.datetime.now())
-    _save_job(_generate_job_key(jid), data)
+    for key in params.keys():
+        job[key] = params[key]
+
+    _save_job( _generate_job_key(job['id']), job )
 
 # return all jobs in the redis database
 def get_jobs():

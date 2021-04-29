@@ -1,49 +1,48 @@
 import database, json
 from psycopg2 import OperationalError
+from jobs import q, get_job, update_job
 
-def __update_job(job, params):
-    for key in params.keys():
-        job[key] = params[key]
-    return job
-
-def run_job(job):
+@q.worker
+def run_job(jid):
+    job = get_job(jid)
     job_type = job['job_type']
+
+    print("Accepted job " + job['id'] + ".")
     
     if job_type == "insert":
         
         try:
             database.insert(job['data'])
-            job = __update_job(job, {"status": "success"})
+            update_job(job, {"status": "success"})
         except OperationalError:
-            job = __update_job(job, {"status": "failed", "error": "unable to connect to database"})
+            update_job(job, {"status": "failed", "error": "unable to connect to database"})
         except Exception as error:
-            job = __update_job(job, {"status": "failed", "error": str(error)})
-            
-        return job
+            update_job(job, {"status": "failed", "error": str(error)})
 
     elif job_type == "query":
         try:
             data = database.get(job['cols'], job['params'])
-            job = __update_job(job, {"status": "success", "data": data })
+            update_job(job, {"status": "success", "data": data })
         except Exception as error:
-            job = __update_job(job, {"status": "failed", "error": str(error)})
-
-        return job
+            update_job(job, {"status": "failed", "error": str(error)})
 
     elif job_type == "update":
         try:
             database.update(job['data'], job['params'])
-            job = __update_job(job, {"status": "success"})
+            update_job(job, {"status": "success"})
         except Exception as error:
-            job = __update_job(job, {"status": "failed", "error": str(error)})
-
-        return job
+            update_job(job, {"status": "failed", "error": str(error)})
 
     elif job_type == "delete":
-        database.delete(job['params'])
-        job = __update_job(job, {"status": "success"})
-
-        return job
+        try:
+            database.delete(job['params'])
+            update_job(job, {"status": "success"})
+        except Exception as error:
+            update_job(job, {"status": "failed", "error": str(error)})
 
     else:
-        return __update_job(job, {"status": "failed", "error": "unknown job type"})
+        update_job(job, {"status": "failed", "error": "unknown job type"})
+
+if __name__ == '__main__':
+    print("Worker running!")
+    run_job()

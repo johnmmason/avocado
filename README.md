@@ -6,6 +6,13 @@ Build containers and launch using `docker-compose`:
 ```
 docker-compose up -d --build
 ```
+
+To launch multiple workers, add `--scale worker={num_workers}`
+
+```
+docker-compose up -d --scale worker=3
+```
+
 #### Curl command to POST a job request
 
 ```
