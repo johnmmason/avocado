@@ -3,6 +3,8 @@ version: "3"
 services:
   api:
     build: api
+    environment:
+      SECRET_KEY: jmmpahCOE332
     ports:
       - "5000:5000"
     depends_on:

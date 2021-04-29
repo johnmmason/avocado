@@ -1,8 +1,22 @@
 import json
-from flask import Flask, request
+from flask import Flask, request, render_template
+from config import Config
+from forms import submitJobForm
 import jobs
 
 app = Flask(__name__)
+
+# getting secret key from env var
+app.config.from_object(Config)
+
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+@app.route('/insert')
+def insert():
+    form = submitJobForm()
+    return render_template('insert.html', form=form)
 
 @app.route('/jobs', methods=['POST'])
 def add_job():
