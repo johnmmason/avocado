@@ -2,7 +2,7 @@ import psycopg2
 from psycopg2.extensions import AsIs
 import json
 
-PG_HOST = 'localhost'
+PG_HOST = 'postgres'
 PG_USER = 'avocado'
 PG_PASSWORD = 'avocado'
 PG_DATABASE = 'avocado'
