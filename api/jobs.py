@@ -54,24 +54,6 @@ def update_job(jid, startFin, data): # startFin is a string either 'start' or 'e
     data[startFin] = str(datetime.datetime.now())
     _save_job(_generate_job_key(jid), data)
 
-def _decode_dict(data):
-    decoded_data = {}
-
-    for key in data.keys():
-        if isinstance(key, bytes):
-            decoded_data[key] = data[key].decode('utf-8')        
-        if isinstance(data[key], dict):
-            decoded_data[key] =  _decode_dict(data[key])
-        elif isinstance(data[key], list):
-            decoded_list = []
-            for item in data[key]:
-                decoded_list.append( _decoded_dict(item) )
-            decoded_data[key] = decoded_list
-        else:
-            raise Exception
-
-    return decoded_data
-
 # return all jobs in the redis database
 def get_jobs():
     db_data = {}
