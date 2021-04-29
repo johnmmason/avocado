@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: avocado-test-redis-service
+  labels:
+    username: phart
+    env: test
+spec:
+  type: ClusterIP
+  selector:
+    username: phart
+    env: test
+    app: avocado-test-redis
+  ports:
+  - name: redis
+    port: 6379
+    targetPort: 6379

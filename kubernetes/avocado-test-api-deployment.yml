@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avocado-test-flask-deployment
+  labels:
+    app: avocado-test-flask
+    username: phart
+    env: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avocado-test-flask
+  template:
+    metadata:
+      labels:
+        app: avocado-test-flask
+        username: phart
+        env: test
+    spec:
+      containers:
+        - name: avocado-test-flask
+          imagePullPolicy: Always
+          image: phart26/avocado-test-api:latest
+          ports:
+            - name: flask
+              containerPort: 5000

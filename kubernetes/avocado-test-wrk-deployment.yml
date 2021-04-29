@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avocado-test-worker-deployment
+  labels:
+    app: avocado-test-worker
+    username: phart
+    env: test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: avocado-test-worker
+  template:
+    metadata:
+      labels:
+        app: avocado-test-worker
+        username: phart
+        env: test
+    spec:
+      containers:
+        - name: avocado-test-worker
+          imagePullPolicy: Always
+          image: phart26/avocado-test-wrk:latest
