@@ -1,6 +1,17 @@
 version: "3"
 
 services:
+  api:
+    image: avocado/api:latest
+    ports:
+      - "5000:5000"
+    depends_on:
+      - "redis"
+  worker:
+    image: avocado/worker:latest
+    depends_on:
+      - "redis"
+      - "postgres"
   postgres:
     image: postgres
     restart: always
@@ -18,3 +29,4 @@ services:
     restart: always
     ports:
       - "6379:6379"
+
