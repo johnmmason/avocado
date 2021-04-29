@@ -2,13 +2,13 @@ version: "3"
 
 services:
   api:
-    image: avocado/api:latest
+    build: api
     ports:
       - "5000:5000"
     depends_on:
       - "redis"
   worker:
-    image: avocado/worker:latest
+    build: worker
     depends_on:
       - "redis"
       - "postgres"

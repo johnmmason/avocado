@@ -2,15 +2,14 @@
 
 #### Docker Build Commands
 
-Run using the Makefile and a docker compose
+Build containers and launch using `docker-compose`:
 ```
-make build-all
-docker-compose up
+docker-compose up -d --build
 ```
 #### Curl command to POST a job request
 
 ```
-curl -X POST -H "content-type: application/json" -d '{<JSON String to do PostGres CRUD operation>}' localhost:5012/jobs
+curl -X POST -H "content-type: application/json" -d '{"job_type": "sample"}' localhost:5012/jobs
 ```
 
 #### Testing job update/completion in Redis DB

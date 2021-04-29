@@ -1,5 +1,0 @@
-FROM redis:6.2.1
-
-COPY ./data/redis.conf /data/redis.conf
-
-CMD ["redis-server", "/data/redis.conf"]
