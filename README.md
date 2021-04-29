@@ -2,18 +2,29 @@
 
 #### Docker Build Commands
 
+Run using the Makefile and a docker compose
 ```
-[avocado]$ docker build --file docker/Dockerfile.api --tag avocado/api:latest .
-[avocado]$ docker build --file docker/Dockerfile.wrk --tag avocado/worker:latest .
-[avocado]$ docker build --file docker/Dockerfile.db --tag avocado/redis_db:latest .
+make build-all
+docker-compose up
 ```
-
-#### Docker Run Commands
-
-In order for networking to work correctly in the test environment (Docker), we use docker-compose to launch our containers:
+#### Curl command to POST a job request
 
 ```
-[avocado]$ docker-compose up -d
+curl -X POST -H "content-type: application/json" -d '{<JSON String to do PostGres CRUD operation>}' localhost:5012/jobs
 ```
 
-**NOTE:** This is an incomplete solution. Container images need to be re-built before launching with docker-compose. We should discuss changes which would allow docker-compose to build images automatically.
+#### Testing job update/completion in Redis DB
+
+Open a python shell to run the following redis commands
+
+```
+Python 3.6.8 (default, Aug  7 2019, 17:28:10)
+[GCC 4.8.5 20150623 (Red Hat 4.8.5-39)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import redis
+>>> rd=redis.StrictRedis(host='localhost', port=6392, db=10)
+>>> rd.keys()
+[b'job.50738e81-fa4c-443a-9e8e-ef64cf02077b']
+>>> rd.get('job.50738e81-fa4c-443a-9e8e-ef64cf02077b')
+b'{"job_type": "insert", "status": "complete", "end": "2021-04-28 22:25:56.425080"}'
+```

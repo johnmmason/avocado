@@ -1,4 +1,4 @@
-NSPACE="phart"
+NSPACE="avocado"
 APP="avocado-app-test"
 VER="0.0.1"
 
@@ -6,18 +6,20 @@ list-targets:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
 build-db:
-	docker build -t ${NSPACE}/${APP}-db:${VER} \
-                     -f docker/Dockerfile.db \
+	docker build --file docker/Dockerfile.db \
+                     --tag ${NSPACE}/redis_db:${VER} \
                      ./
 build-api:
-	docker build -t ${NSPACE}/${APP}-api:${VER} \
-                     -f docker/Dockerfile.api \
+	docker build --file docker/Dockerfile.api \
+                     --tag ${NSPACE}/api:${VER} \
                      ./
 build-wrk:
-	docker build -t ${NSPACE}/${APP}-wrk:${VER} \
-                     -f docker/Dockerfile.wrk \
+	docker build --file docker/Dockerfile.wrk \
+                     --tag ${NSPACE}/worker:${VER} \
                      ./
 
+compose-up:
+	docker-compose up -d
 
 test-db: build-db
 	docker run --name ${NSPACE}-db \
@@ -42,13 +44,13 @@ test-wrk: build-wrk
 
 
 clean-db:
-	docker ps -a | grep ${NSPACE}-db | awk '{print $$1}' | xargs docker rm -f
+	docker ps -a | grep ${NSPACE}/redis_db | awk '{print $$1}' | xargs docker rm -f
 
 clean-api:
-	docker ps -a | grep ${NSPACE}-api | awk '{print $$1}' | xargs docker rm -f
+	docker ps -a | grep ${NSPACE}/api | awk '{print $$1}' | xargs docker rm -f
 
 clean-wrk:
-	docker ps -a | grep ${NSPACE}-wrk | awk '{print $$1}' | xargs docker rm -f
+	docker ps -a | grep ${NSPACE}/worker | awk '{print $$1}' | xargs docker rm -f
 
 
 

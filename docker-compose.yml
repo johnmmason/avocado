@@ -2,17 +2,17 @@ version: "3"
 
 services:
   api:
-    image: avocado/api:latest
+    image: avocado/api:0.0.1
     ports:
-      - "5000:5000"
+      - "5012:5000"
     depends_on:
       - "redis"
   worker:
-    image: avocado/worker:latest
+    image: avocado/worker:0.0.1
     depends_on:
       - "redis"
   redis:
-    image: avocado/redis_db:latest
+    image: avocado/redis_db:0.0.1
     ports:
-      - "6379:6379"
+      - "6392:6379"
 
