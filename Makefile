@@ -1,21 +1,21 @@
-NSPACE="avocado"
+NSPACE="phart26"
 APP="avocado-app-test"
-VER="0.0.1"
+VER="latest"
 
 list-targets:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
 
 build-db:
-	docker build --file docker/Dockerfile.db \
-                     --tag ${NSPACE}/redis_db:${VER} \
+	docker build --file redis/Dockerfile \
+                     --tag ${NSPACE}/avocado-test-db:${VER} \
                      ./
 build-api:
-	docker build --file docker/Dockerfile.api \
-                     --tag ${NSPACE}/api:${VER} \
+	docker build --file api/dockerfile \
+                     --tag ${NSPACE}/avocado-test-api:${VER} \
                      ./
 build-wrk:
-	docker build --file docker/Dockerfile.wrk \
-                     --tag ${NSPACE}/worker:${VER} \
+	docker build --file worker/ \
+                     --tag ${NSPACE}/avocado-test-worker:${VER} \
                      ./
 
 compose-up:
@@ -43,6 +43,30 @@ test-wrk: build-wrk
                    ${NSPACE}/${APP}-wrk:${VER}
 
 
+push-db:
+	docker push phart26/avocado-test-db
+push-api:
+	docker push phart26/avocado-test-api
+push-wrk:
+	docker push phart26/avocado-test-wrk
+
+push-all: push-api push-wrk
+
+
+cleanKub-flask:
+	kubectl get pods | grep avocado-test-flask-deployment | awk '{print $$1}' | xargs kubectl delete pods
+
+cleanKub-redis:
+	kubectl get pods | grep avocado-test-redis-deployment | awk '{print $$1}' | xargs kubectl delete pods	
+
+cleanKub-wrk:
+	kubectl get pods | grep avocado-test-worker-deployment | awk '{print $$1}' | xargs kubectl delete pods
+
+cleanKub-all: cleanKub-flask cleanKub-wrk
+
+
+
+
 clean-db:
 	docker ps -a | grep ${NSPACE}/redis_db | awk '{print $$1}' | xargs docker rm -f
 
@@ -54,7 +78,7 @@ clean-wrk:
 
 
 
-build-all: build-db build-api build-wrk
+build-all: build-api build-wrk
 
 test-all: test-db test-api test-wrk
 

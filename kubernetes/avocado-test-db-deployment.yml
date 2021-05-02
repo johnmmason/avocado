@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: avocado-test-redis-deployment
+  name: avocado-test-redis-pvc-deployment
   labels:
     app: avocado-test-redis
     username: phart
@@ -16,18 +16,13 @@ spec:
     metadata:
       labels:
         app: avocado-test-redis
-        username: phart
-        env: test
     spec:
       containers:
-        - name: avocado-test-redis
+        - name: avocado-test-redis-container
           image: redis:5.0.0
           volumeMounts:
           - name: avocado-test-redis-pvc
-            mountPath: "./"
-          ports:
-            - name: redis
-              containerPort: 6379
+            mountPath: "/data"
       volumes:
       - name: avocado-test-redis-pvc
         persistentVolumeClaim:

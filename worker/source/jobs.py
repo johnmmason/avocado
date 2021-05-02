@@ -6,8 +6,8 @@ import datetime
 import json
 
 # fill in with the IP of the redis service later
-q = HotQueue("queue", host='redis', port=6379, db=11)
-rd = redis.StrictRedis(host='redis', port=6379, db=10)
+q = HotQueue("queue", host='10.110.128.5', port=6379, db=1)
+rd = redis.StrictRedis(host='10.110.128.5', port=6379, db=0)
 
 def _generate_jid():
     return str(uuid.uuid4())
@@ -61,4 +61,8 @@ def get_jobs():
     for key in rd.keys():
       db_data[key.decode('utf-8')] = json.loads( rd.get(key).decode('utf-8') )
 
-    return db_data  
+    return db_data 
+
+# get json for a single job
+def get_job(jid):
+    return json.loads(rd.get(_generate_job_key(jid)).decode('utf-8'))

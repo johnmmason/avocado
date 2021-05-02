@@ -23,3 +23,6 @@ spec:
         - name: avocado-test-worker
           imagePullPolicy: Always
           image: phart26/avocado-test-wrk:latest
+          ports:
+            - name: http
+              containerPort: 5000

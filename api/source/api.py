@@ -1,7 +1,7 @@
 import json
 from flask import Flask, request, render_template
 from config import Config
-from forms import submitJobForm
+from forms import submitInsertForm, submitQueryForm, submitDeleteForm, submitUpdateForm
 import jobs
 
 app = Flask(__name__)
@@ -15,8 +15,24 @@ def index():
 
 @app.route('/insert')
 def insert():
-    form = submitJobForm()
+    form = submitInsertForm()
     return render_template('insert.html', form=form)
+
+@app.route('/update')
+def update():
+    form = submitUpdateForm()
+    return render_template('update.html', form=form)
+
+@app.route('/query')
+def query():
+    form = submitQueryForm()
+    return render_template('query.html', form=form)
+
+@app.route('/delete')
+def delete():
+    form = submitDeleteForm()
+    return render_template('delete.html', form=form)
+
 
 @app.route('/jobs', methods=['POST'])
 def add_job():
