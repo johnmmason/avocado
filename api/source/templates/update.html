@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h2> Update Form</h2>
+   <!-- <h2> Delete Form</h2>
     <form action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -49,5 +49,76 @@
             {{ form.region(size=32) }}
         </p>
         <p>{{ form.submit() }}</p>
-    </form>    
+    </form>-->
+
+    <div class="container">
+      <h2>Update Form</h2>
+      <form class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post">
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="week_id">Week ID</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="week_id" placeholder="1" name="week_id">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="week">Week</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="week" placeholder="mm/dd/yy" name="week">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="price">Price</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="price" placeholder="$$$" name="price">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="volume">Volume</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="volume" placeholder="123" name="volume">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="total_4046">Total 4046</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="total_4046" placeholder="123" name="total_4046">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="total_4225">Total 4225</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="total_4225" placeholder="123" name="total_4225">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="total_4770">Total 4770</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="total_4770" placeholder="123" name="total_4770">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="category">Category</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="category" placeholder="conventional" name="category">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="year">Year</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="year" placeholder="1" name="year">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2" for="region">Region</label>
+          <div class="col-sm-10">          
+            <input type="text" class="form-control" id="region" placeholder="Atlanta" name="region">
+          </div>
+        </div>
+        <div class="form-group">        
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>    
 {% endblock %}
