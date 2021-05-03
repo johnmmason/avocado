@@ -6,8 +6,8 @@ import datetime
 import json
 
 # fill in with the IP of the redis service later
-q = HotQueue("queue", host='10.110.128.5', port=6379, db=1)
-rd = redis.StrictRedis(host='10.110.128.5', port=6379, db=0)
+q = HotQueue("queue", host=os.environ['REDIS_HOST'], port=6379, db=1)
+rd = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=6379, db=0)
 
 def _generate_jid():
     return str(uuid.uuid4())

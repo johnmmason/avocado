@@ -5,6 +5,7 @@ services:
     build: api
     environment:
       SECRET_KEY: jmmpahCOE332
+      REDIS_HOST: redis
     ports:
       - "5000:5000"
     depends_on:
@@ -14,6 +15,8 @@ services:
     depends_on:
       - "redis"
       - "postgres"
+    environment:
+      REDIS_HOST: redis
   postgres:
     image: postgres
     restart: always
