@@ -50,6 +50,8 @@
         <li><a href="update">Update</a></li>
         <li><a href="delete">Delete</a></li>
         <li><a href="query">Query</a></li>
+        <li><a href="getJobs">Jobs</a></li>
+        <li><a href="database">Database</a></li>
         <li><a href="analytics">Analytics</a><li>
       </ul>
     </div>
@@ -62,7 +64,8 @@
     </div>
     <div class="col-sm-8 text-left"> 
       <h1>Welcome to Everything Avocados!</h1>
-      <p></p>
+      <p>Navigate between the different pages/forms in the header to submit differnt requests to out api. These requests are interacting with multiple kubernetes clusters that contain worker nodes to do tasks that involve intercating with a Redis database as well as a Postgres database.
+This HTML site is brought to you by a NodePort service on TACC's ISP machine that is currently pointing at our flask app cluster.</p>
       <hr>
       <form action="https://github.com/johnmmason/avocado">
         <input type="submit" value="Github Repo"/>

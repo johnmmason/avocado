@@ -19,10 +19,15 @@ spec:
     spec:
       containers:
         - name: avocado-test-redis-container
-          image: redis:5.0.0
+          image: phart26/avocado-test-db:latest
+          imagePullPolicy: Always
+          command: ["redis-server"]
           volumeMounts:
           - name: avocado-test-redis-pvc
             mountPath: "/data"
+          ports:
+            - name: redis
+              containerPort: 6379
       volumes:
       - name: avocado-test-redis-pvc
         persistentVolumeClaim:

@@ -33,6 +33,14 @@ def delete():
     form = submitDeleteForm()
     return render_template('delete.html', form=form)
 
+@app.route('/getJobs', methods=['GET'])
+def jobs():
+    return render_template('jobs.html')
+
+@app.route('/database', methods=['GET'])
+def entries():
+    return render_template('entries.html')
+
 
 @app.route('/jobs', methods=['POST'])
 def add_job():
@@ -41,10 +49,6 @@ def add_job():
     except Exception as e:
         return True, json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
     return json.dumps(jobs.add_job(job))
-
-@app.route('/get_jobs', methods=['GET'])
-def get_jobs():
-    return json.dumps(jobs.get_jobs())
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

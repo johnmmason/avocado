@@ -20,9 +20,10 @@ spec:
         env: test
     spec:
       containers:
-        - name: avocado-test-worker
+        - name: avocado-test-worker-container
           imagePullPolicy: Always
-          image: phart26/avocado-test-wrk:latest
+          image: phart26/avocado-test-api:latest
+          command: ['python', 'worker.py']
           ports:
             - name: http
               containerPort: 5000
