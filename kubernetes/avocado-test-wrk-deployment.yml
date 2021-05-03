@@ -22,7 +22,7 @@ spec:
       containers:
         - name: avocado-test-worker-container
           imagePullPolicy: Always
-          image: phart26/avocado-test-api:latest
+          image: phart26/avocado-test-wrk:latest
           command: ['python', 'worker.py']
           ports:
             - name: http
