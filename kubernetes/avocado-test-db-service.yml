@@ -8,8 +8,6 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    username: phart
-    env: test
     app: avocado-test-redis
   ports:
   - name: redis
