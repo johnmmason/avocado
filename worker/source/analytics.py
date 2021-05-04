@@ -54,9 +54,11 @@ def bar_plot(columns, params=[]):
     Y = df[Y_name]
     
     plt.bar(X, Y)
+
     plt.title(Y_name + " by " + X_name)
     plt.xlabel(X_name)
     plt.ylabel(Y_name)
+
     return plt
 
 def line_plot(columns, params=[]):
@@ -69,13 +71,18 @@ def line_plot(columns, params=[]):
     X_name = columns[0]
     Y_name = columns[1]
     
-    df = _load_df(SELECT_QUERY.format(X_name, Y_name) + __build_query(params), [X_name, Y_name])
+    df = _load_df(SELECT_QUERY.format(X_name, Y_name) + __build_query(params) + " ORDER BY " + X_name + " ASC", [X_name, Y_name])
 
     X = df[X_name]
     Y = df[Y_name]
 
+    plt.title(Y_name + " by " + X_name)
+    plt.xlabel(X_name)
+    plt.ylabel(Y_name)
+
     plt.plot(X, Y)
-    plt.show()
+
+    return plt
 
 def box_plot(columns, params=[]):
 
@@ -94,12 +101,10 @@ def box_plot(columns, params=[]):
 
     sns.set_theme(style='whitegrid')
     ax = sns.boxplot(x=X, y=Y)
-    return plt
 
-if __name__ == '__main__':
-    # bar_plot(['week_id', 'price'])
-    # bar_plot(['week_id', 'price'], [{'type': 'greater_than', 'column': 'week_id', 'value': 42}])
-    # line_plot(['week', 'price'], [{'type': 'greater_than', 'column': 'price', 'value': 1.50}])
-    # line_plot(['week', 'price'])
-    box_plot(['year', 'price'])
+    plt.title(Y_name + " by " + X_name)
+    plt.xlabel(X_name)
+    plt.ylabel(Y_name)
+    
+    return plt
 
