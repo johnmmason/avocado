@@ -45,10 +45,11 @@ def entries():
 @app.route('/jobs', methods=['POST'])
 def add_job():
     try:
-        job = request.get_json(force=True)
+        return request.form
     except Exception as e:
-        return True, json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
-    return json.dumps(jobs.add_job(job))
+        return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
+    jsonData = json.dumps(jobs.add_job(job))
+    return render_template('formReturn.html', job_type = jsonData['job_type'], data = jsonData)
 
 @app.route('/get_jobs', methods=['GET'])
 def get_jobs():

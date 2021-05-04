@@ -1,11 +1,12 @@
 import psycopg2
 from psycopg2.extensions import AsIs
 import json
+import os
 
-PG_HOST = 'postgres'
-PG_USER = 'avocado'
-PG_PASSWORD = 'avocado'
-PG_DATABASE = 'avocado'
+PG_HOST = os.environ['PG_HOST']
+PG_USER = os.environ['PG_USER']
+PG_PASSWORD = os.environ['PG_PASSWORD']
+PG_DATABASE = os.environ['PG_DATABASE']
 
 DB_ROWS = ['id', 'week_id', 'price', 'volume', 'total_4046', 'total_4225', 'total_4770', 'category', 'year', 'region']
 
