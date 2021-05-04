@@ -17,6 +17,10 @@ services:
       - "postgres"
     environment:
       REDIS_HOST: redis
+      PG_HOST: postgres
+      PG_USER: avocado
+      PG_PASSWORD: avocado
+      PG_DATABASE: avocado
   postgres:
     image: postgres
     restart: always

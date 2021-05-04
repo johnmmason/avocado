@@ -8,6 +8,7 @@ import json
 # fill in with the IP of the redis service later
 q = HotQueue("queue", host=os.environ['REDIS_HOST'], port=6379, db=1)
 rd = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=6379, db=0)
+imgdb = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=6379, db=2)
 
 def _generate_jid():
     return str(uuid.uuid4())
@@ -68,3 +69,14 @@ def get_jobs():
       db_data[key.decode('utf-8')] = rd.hgetall(key)
 
     return db_data
+
+def save_plot(jid, plt):
+    IMG_PATH = './tmp/' + jid
+    plt.savefig(IMG_PATH)
+
+    with open(IMG_PATH + '.png', 'rb') as f:
+        img = f.read()
+        imgdb.set(jid, img)
+
+    
+    
