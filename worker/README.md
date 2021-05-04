@@ -2,6 +2,36 @@
 
 Currently, the following jobs are accepted:
 
+## Plot
+
+The plot job type creates a basic plot defined by the given parameters:
+
+#### Requirements:
+
+| Key | Value |
+| --- | ----- |
+| plot_type | A string, one of `{bar, line, plot}`. |
+| cols | A list of exactly two column names in the format `[ x-axis, y-axis ]`. |
+| params | A list with any number of query parameters. See below. |
+
+Each parameter must be defined with keys `{column, type, value}`.  Supported operators are `equals, greater_than, greater_equal, less_than, less_equal`.
+
+#### Example:
+
+```
+{
+    "job_type": "plot",
+    "plot_type": "box",
+    "status": "submitted",
+    "cols": ["year", "price"],
+    "params": [{
+        "column": "year",
+        "type": "greater_than",
+        "value": 2012
+        }]
+}
+```
+
 ## Insert
 
 The insert job type adds a single row to the database.
