@@ -42,6 +42,10 @@ The insert job type adds a single row to the database.
 
 A parameter `data` with a key-value dictionary of all columns in the table and the values to be added.
 
+| Key | Value |
+| --- | ----- |
+| data | A key-value dictionary of all columns in the table and the values to be added |
+
 #### Example:
 ```
 {
@@ -68,9 +72,13 @@ The query job type retrieves a subset of the database matching given parameters.
 
 #### Requirements:
 
-The query job accepts a list of colums `cols` and a list of parameters `params`.
+| Key | Value |
+| --- | ----- |
+| cols | A list of columns to return |
+| params | A list with any number of query parameters. |
 
 Each parameter must be defined with keys `{column, type, value}`.  Supported operators are `equals, greater_than, greater_equal, less_than, less_equal`.
+
 
 #### Example:
 
@@ -99,7 +107,10 @@ The update job type modifies a subset of the database matching given parameters.
 
 #### Requirements:
 
-The update job accepts a list of parameters `params` and new data `data`.
+| Key | Value |
+| --- | ----- |
+| params | A list with any number of query parameters. |
+| data | A key-value dictionary of columns to be updated |
 
 Each parameter must be defined with keys `{column, type, value}`.  Supported operators are `equals, greater_than, greater_equal, less_than, less_equal`.
 
@@ -129,7 +140,12 @@ The delete job type removes all rows from the database which match given paramet
 
 #### Requirements:
 
-The delete job accepts a list of parameters `params` and new data `data`.
+The delete job accepts a list of parameters `params`.
+
+| Key | Value |
+| --- | ----- |
+| params | A list with any number of query parameters |
+| data | A key-value dictionary of columns to be updated |
 
 Each parameter must be defined with keys `{column, type, value}`.  Supported operators are `equals, greater_than, greater_equal, less_than, less_equal`.
 
