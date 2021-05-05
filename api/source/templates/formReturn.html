@@ -10,10 +10,12 @@
       <br>
       <br>
       <br>
-      <ul>
-        {% for key in data: %}
-        <li> {{ key }} : {{ data[key] }} </li>
-        {% endfor %}
+      <ul style="list-style-type:none; background:#7bc59c; padding:70px;">
+        <div style="background:#dcdcdc; padding:20px; margin:30px;">
+          {% for key, value in data.items(): %}
+            <li> {{ key }} : {{ value }} </li>
+          {% endfor %}
+        </div>
       </ul>
     </div>
     <div class="col-sm-2 sidenav">
