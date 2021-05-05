@@ -108,3 +108,26 @@ def box_plot(columns, params=[]):
     
     return plt
 
+def summary(columns):
+    
+    assert type(columns) == list
+
+    df = _load_df("SELECT * FROM avocado", DB_COLUMNS)
+
+    stats = {}
+    
+    for column in columns:
+
+        assert column in DB_COLUMNS, 'Invalid column name ' + column
+        
+        stats[column] = {
+            "mean": df[column].mean(),
+            "median": df[column].median(),
+            "std": df[column].std(),
+            "q25": df[column].quantile(q=.25),
+            "q50": df[column].quantile(q=.50),
+            "q75": df[column].quantile(q=.75),
+            "count": df.shape[0]
+        }
+
+    return stats

@@ -75,6 +75,14 @@ def run_job(jid):
         except Exception as error:
             update_job(job, {"status": "failed", "error": str(error)})
 
+    elif job_type == "summary":
+
+        # try:
+        job['stats'] = analytics.summary(job['cols'])
+        update_job(job, {"status": "success"})
+        # except:
+        #     update_job(job, {"status": "failed"})
+
 if __name__ == '__main__':
     print("Worker running!")
     run_job()
