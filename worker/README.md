@@ -33,6 +33,7 @@ The following job types are supported:
 * Update
 * Delete
 * Plot
+* Summary
 
 ### Insert
 
@@ -200,3 +201,22 @@ Each parameter must be defined with keys `{column, type, value}`.  Supported ope
 }
 ```
 
+### Summary
+
+The summary job type returns the summary statistics mean, median, std deviation, 25% quantile, 50% quantile, 75% quantile, and count for each specified column.
+
+#### Requirements:
+
+| Key | Value |
+| --- | ----- |
+| cols | A list of column names. |
+
+#### Example:
+
+```
+{
+    "job_type": "summary",
+    "status": "submitted",
+    "cols": ["year", "price"]
+}
+```
