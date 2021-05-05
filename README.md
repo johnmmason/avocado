@@ -1,36 +1,61 @@
 # avocado
 
-#### Docker Build Commands
+## Usage
 
-Build containers and launch using `docker-compose`:
+Our system supports a variety of actions (jobs) which interact with and run analysis on our dataset.  All jobs must be submitted to our API where they are queued for processing by worker nodes.
+
+The following job types are supported:
+
+* Insert
+* Query
+* Update
+* Delete
+* Plot
+* Summary
+
+### Preferred Method: Web Application
+
+Our web application can be accessed at https://isp-proxy.tacc.utexas.edu/phart/.
+
+### Alternate Method: Interact directly with our API
+
+If you prefer to submit jobs in raw JSON format, you can do so using the `raw_jobs` route.  See `avocado/worker/README.md` for proper job formatting and examples.
+
+Jobs can be sent via POST request using curl or a program like Postman.
+
+```
+curl -X POST -H "content-type: application/json" -d '{"job_type": "sample"}' https://isp-proxy.tacc.utexas.edu/phart/raw_jobs
+```
+
+## Deployment Instructions
+
+### Production Deployment Instructions (Kubernetes)
+
+Section in progress...
+
+### Test Deployment Instructions (docker-compose)
+
+For rapid testing and development, the project can be launched using docker-compose.
+
+Use the `-d` flag to run in the daemon mode and the `--build` flag to rebuild the containers on launch (optional).
+
 ```
 docker-compose up -d --build
+...
+Starting avocado_redis_1    ... done
+Starting avocado_postgres_1 ... done
+Starting avocado_api_1      ... done
+Starting avocado_worker_1   ... done
 ```
 
 To launch multiple workers, add `--scale worker={num_workers}`
 
 ```
 docker-compose up -d --scale worker=3
-```
-
-#### Curl command to POST a job request
-
-```
-curl -X POST -H "content-type: application/json" -d '{"job_type": "sample"}' localhost:5012/jobs
-```
-
-#### Testing job update/completion in Redis DB
-
-Open a python shell to run the following redis commands
-
-```
-Python 3.6.8 (default, Aug  7 2019, 17:28:10)
-[GCC 4.8.5 20150623 (Red Hat 4.8.5-39)] on linux
-Type "help", "copyright", "credits" or "license" for more information.
->>> import redis
->>> rd=redis.StrictRedis(host='localhost', port=6392, db=10)
->>> rd.keys()
-[b'job.50738e81-fa4c-443a-9e8e-ef64cf02077b']
->>> rd.get('job.50738e81-fa4c-443a-9e8e-ef64cf02077b')
-b'{"job_type": "insert", "status": "complete", "end": "2021-04-28 22:25:56.425080"}'
+Starting avocado_redis_1    ... done
+Starting avocado_postgres_1 ... done
+Starting avocado_api_1      ... done
+Starting avocado_worker_1   ... done
+Starting avocado_worker_2   ... done
+...
 ```
