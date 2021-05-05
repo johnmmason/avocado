@@ -15,7 +15,7 @@ The following job types are supported:
 
 ### Preferred Method: Web Application
 
-Our web application can be accessed at https://isp-proxy.tacc.utexas.edu/phart/.
+Our web application can be accessed at https://isp-proxy.tacc.utexas.edu/phart/index.
 
 ### Alternate Method: Interact directly with our API
 
