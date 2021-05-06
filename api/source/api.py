@@ -50,6 +50,14 @@ def raw_job():
 def get_jobs():
     return json.dumps(jobs.get_jobs())
 
+@app.route('/get_job/<jid>', methods=['GET'])
+def get_job(jid):
+    job_dict = jobs.get_jobs()
+    try:
+        return json.dumps( job_dict[ jobs._generate_job_key(jid) ], indent=4 )
+    except:
+        return abort(404)
+
 @app.route('/download/<jid>', methods=['GET'])
 def download(jid):
     try:
