@@ -82,6 +82,10 @@ def get(cols, params):
     cursor.execute(SQL)
     data = __map_dict(cursor.fetchall(), cols)
 
+    if 'week' in cols:
+        for row in data:
+            row['week'] = str( row['week'] )
+    
     cursor.close()
     conn.commit()
     conn.close()
