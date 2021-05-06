@@ -2,11 +2,12 @@
 
 ## Checklist
 
-- [ ] Add route to retrieve jobs via CURL (standard get)
+- [x] Add route to retrieve jobs via CURL (standard get)
 - [ ] Add relative link to worker/README.md where appropriate
 - [x] Fix worker date serialization bug
 - [x] Add instructions for retrieving images from plot jobs
 - [ ] Add dataset overview
+- [x] Catch invalid IDs on image, get routes
 
 ## Usage
 
