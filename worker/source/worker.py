@@ -1,6 +1,7 @@
 import database, json
 from psycopg2 import OperationalError
-from jobs import q, get_job, update_job
+from jobs import q, get_job, update_job, save_plot
+import analytics
 
 @q.worker
 def run_job(jid):

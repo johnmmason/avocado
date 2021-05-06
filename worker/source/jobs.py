@@ -49,27 +49,31 @@ def add_job(data):
     _queue_job(jid)
     return data
 
-def update_job(jid, startFin, data): # startFin is a string either 'start' or 'end'
+def get_job(jid):
+    jid = _generate_job_key(jid)
+    job = json.loads( rd.get(jid).decode('utf-8') )
+    return job
+
+def update_job(job, params): # startFin is a string either 'start' or 'end'
     """Update the status of job with job id `jid` to status `status`."""
-    # update start or end timestamp
-    data[startFin] = str(datetime.datetime.now())
-    _save_job(_generate_job_key(jid), data)
+    for key in params.keys():
+        job[key] = params[key]
+
+    _save_job( _generate_job_key(job['id']), job )
 
 # return all jobs in the redis database
 def get_jobs():
     db_data = {}
     # iterate through all the keys in the redis db
     for key in rd.keys():
-      db_data[key.decode('utf-8')] = json.loads( rd.get(key).decode('utf-8') )
+      db_data[key.decode('utf-8')] = rd.hgetall(key)
 
-    return db_data 
+    return db_data
 
-# get json for a single job
-def get_job(jid):
-    return json.loads(rd.get(_generate_job_key(jid)).decode('utf-8'))
+def save_plot(jid, plt):
+    IMG_PATH = './tmp/' + jid
+    plt.savefig(IMG_PATH)
 
-def get_plot(jid):
-    IMG_PATH = './tmp/{}.png'.format(jid)
-    with open(IMG_PATH, 'wb') as f:
-        f.write(imgdb.get(jid))
-    return IMG_PATH
+    with open(IMG_PATH + '.png', 'rb') as f:
+        img = f.read()
+        imgdb.set(jid, img)
