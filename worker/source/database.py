@@ -8,7 +8,7 @@ PG_USER = os.environ['PG_USER']
 PG_PASSWORD = os.environ['PG_PASSWORD']
 PG_DATABASE = os.environ['PG_DATABASE']
 
-DB_ROWS = ['id', 'week_id', 'price', 'volume', 'total_4046', 'total_4225', 'total_4770', 'category', 'year', 'region']
+DB_COLUMNS = ['id', 'week_id', 'week', 'price', 'volume', 'total_4046', 'total_4225', 'total_4770', 'category', 'year', 'region']
 
 def __map_dict(rows, cols):
     rows_list = []
@@ -22,6 +22,8 @@ def __map_dict(rows, cols):
 
 def __build_query(params):
 
+    KEY_QUERY = ''
+    
     first_key = True
     for param in params:
         if first_key:
@@ -80,6 +82,10 @@ def get(cols, params):
     cursor.execute(SQL)
     data = __map_dict(cursor.fetchall(), cols)
 
+    if 'week' in cols:
+        for row in data:
+            row['week'] = str( row['week'] )
+    
     cursor.close()
     conn.commit()
     conn.close()
@@ -127,5 +133,4 @@ def delete(params):
 
     cursor.close()
     conn.commit()
-    conn.close()
-    
+    conn.close()   

@@ -14,33 +14,14 @@ app.config.from_object(Config)
 def index():
     return render_template('index.html')
 
-@app.route('/insert')
+@app.route('/formSubmit')
 def insert():
-    form = submitInsertForm()
-    return render_template('insert.html', form=form)
-
-@app.route('/update')
-def update():
-    form = submitUpdateForm()
-    return render_template('update.html', form=form)
-
-@app.route('/query')
-def query():
-    form = submitQueryForm()
-    return render_template('query.html', form=form)
-
-@app.route('/delete')
-def delete():
-    form = submitDeleteForm()
-    return render_template('delete.html', form=form)
+    return render_template('formSubmit.html')
 
 @app.route('/getJobs', methods=['GET'])
 def jobs_page():
+    jobsData = 
     return render_template('jobs.html')
-
-@app.route('/database', methods=['GET'])
-def entries():
-    return render_template('entries.html')
 
 
 @app.route('/jobs', methods=['POST'])

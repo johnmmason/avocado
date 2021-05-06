@@ -1,20 +1,6 @@
 {% extends "base.html" %}
 
-{% block content %} 
-   <script type="text/javascript">
-     function submitform(){
-        var formData = JSON.stringify($("#myForm").serializeArray());
-        console.log(formData);
-        $.ajax({
-          type: "POST",
-          url: "https://isp-proxy.tacc.utexas.edu/phart/jobs",
-          data: formData,
-          dataType: "json",
-          contentType : "application/json"
-        });
-        alert("sent json data");
-      }
-    </script>
+{% block content %}  
     <style>
     * {
       box-sizing: border-box;
@@ -39,7 +25,7 @@
     }
     </style> 
     <div class="container">
-      <h2>Insert Form</h2>
+      <h2>Submit Form</h2>
       <br>
       <p>Copy and paste the json format of a request type into the text box and edit to desired request (ie. Insert, Query, Update, Delete)</p>
       <br>
