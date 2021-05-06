@@ -1,4 +1,4 @@
-import json
+import json, time
 from flask import Flask, request, render_template, send_file
 from config import Config
 from forms import submitInsertForm, submitQueryForm, submitDeleteForm, submitUpdateForm
@@ -41,15 +41,20 @@ def jobs_page():
 def entries():
     return render_template('entries.html')
 
-
 @app.route('/jobs', methods=['POST'])
 def add_job():
     try:
-        return request.form
+        job = json.loads(request.form.get('jsonData'))
     except Exception as e:
         return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
-    jsonData = json.dumps(jobs.add_job(job))
-    return render_template('formReturn.html', job_type = jsonData['job_type'], data = jsonData)
+    jobData = jobs.add_job(job)
+
+    while ( jobData['status'] == 'submitted' ):
+        jobData = jobs.get_job(jobData['id'])
+        time.sleep(2)
+        
+    return json.dumps(jobData, indent=4)
+    # render_template('formReturn.html', job_type = jsonData['job_id'], data = jobData)
 
 @app.route('/raw_jobs', methods=['POST'])
 def raw_job():
