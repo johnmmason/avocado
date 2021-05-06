@@ -1,8 +1,9 @@
-import json, time
+import json
 from flask import Flask, request, render_template, send_file
 from config import Config
 from forms import submitInsertForm, submitQueryForm, submitDeleteForm, submitUpdateForm
 import jobs
+import time
 
 app = Flask(__name__)
 
@@ -13,33 +14,14 @@ app.config.from_object(Config)
 def index():
     return render_template('index.html')
 
-@app.route('/insert')
+@app.route('/formSubmit')
 def insert():
-    form = submitInsertForm()
-    return render_template('insert.html', form=form)
-
-@app.route('/update')
-def update():
-    form = submitUpdateForm()
-    return render_template('update.html', form=form)
-
-@app.route('/query')
-def query():
-    form = submitQueryForm()
-    return render_template('query.html', form=form)
-
-@app.route('/delete')
-def delete():
-    form = submitDeleteForm()
-    return render_template('delete.html', form=form)
+    return render_template('formSubmit.html')
 
 @app.route('/getJobs', methods=['GET'])
 def jobs_page():
-    return render_template('jobs.html')
-
-@app.route('/database', methods=['GET'])
-def entries():
-    return render_template('entries.html')
+    jobsData = json.loads(get_jobs())
+    return render_template('jobs.html', data=jobsData)
 
 @app.route('/jobs', methods=['POST'])
 def add_job():
@@ -49,12 +31,12 @@ def add_job():
         return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
     jobData = jobs.add_job(job)
 
-    while ( jobData['status'] == 'submitted' ):
-        jobData = jobs.get_job(jobData['id'])
-        time.sleep(2)
-        
-    return json.dumps(jobData, indent=4)
-    # render_template('formReturn.html', job_type = jsonData['job_id'], data = jobData)
+    while(jobData['status']=='submitted'):
+      jobData = jobs.get_job(jobData['job_id'])
+      time.sleep(2)
+    jobData = json.dumps(jobs.get_job(jobData['job_id']))
+    jsonData = json.loads(jobData)
+    return render_template('formReturn.html', job_type = jsonData['job_type'], data = jobData)
 
 @app.route('/raw_jobs', methods=['POST'])
 def raw_job():

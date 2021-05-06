@@ -43,7 +43,7 @@ def add_job(data):
     """Add a job to the redis queue."""
     jid = _generate_jid()
     # attach job id to data
-    data['id'] = jid
+    data['job_id'] = jid
     data['submitted'] = str(datetime.datetime.now())
     _save_job(_generate_job_key(jid), data)
     _queue_job(jid)
@@ -73,4 +73,4 @@ def get_plot(jid):
     with open(IMG_PATH, 'wb') as f:
         f.write(imgdb.get(jid))
     return IMG_PATH
-    
+

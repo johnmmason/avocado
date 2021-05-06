@@ -43,7 +43,7 @@ def add_job(data):
     """Add a job to the redis queue."""
     jid = _generate_jid()
     # attach job id to data
-    data['id'] = jid
+    data['job_id'] = jid
     data['submitted'] = str(datetime.datetime.now())
     _save_job(_generate_job_key(jid), data)
     _queue_job(jid)
@@ -59,7 +59,7 @@ def update_job(job, params): # startFin is a string either 'start' or 'end'
     for key in params.keys():
         job[key] = params[key]
 
-    _save_job( _generate_job_key(job['id']), job )
+    _save_job( _generate_job_key(job['job_id']), job )
 
 # return all jobs in the redis database
 def get_jobs():
@@ -77,6 +77,3 @@ def save_plot(jid, plt):
     with open(IMG_PATH + '.png', 'rb') as f:
         img = f.read()
         imgdb.set(jid, img)
-
-    
-    

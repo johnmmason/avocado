@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}  
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Create four equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 25%;
+      padding: 10px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    h5 {
+      font-size: 12px;
+      font-weight: bold;  
+    }
+    </style> 
+    <div class="container">
+      <h2>Submit Form</h2>
+      <br>
+      <p>Copy and paste the json format of a request type into the text box and edit to desired request (ie. Insert, Query, Update, Delete)</p>
+      <br>
+      <h3>JSON Formats</h3>
+      <br>
+      <div class="row">
+      <div class="column" style="background-color:#aaa;"> 
+        <h2>Insert</h2>
+        <br>
+        <div style="background-color:#e8e8e8; padding: 10px;">
+          <h5>{</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "insert",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "status": "submitted",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "data": {</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "week_id": 1,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "week": "01/01/12",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "price": 1.243,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "volume": 2,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "total_4046": 700,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "total_4225": 800,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "total_4770": 900,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "category": "conventional",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "year": 2012,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "region": "Atlanta"</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp }</h5>
+          <h5>}</h5>
+        </div>
+      </div>
+      <div class="column" style="background-color:#aaa;"> 
+        <h2>Query</h2>
+        <br>
+        <div style="background-color:#e8e8e8; padding: 10px;">
+          <h5>{</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "query",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "status": "submitted",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "cols": ["id", "price"],</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "params": [</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "column": "year",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "type": "equals",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "value": 2012</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp },</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "column": "total_4046",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "type": "less_equal",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "value": 700</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp }</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp ]</h5>
+          <h5>}</h5>
+        </div>
+      </div>
+      <div class="column" style="background-color:#aaa;"> 
+        <h2>Update</h2>
+        <br>
+        <div style="background-color:#e8e8e8; padding: 10px;">
+          <h5>{</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "update",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "status": "submitted",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "params": [</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "column": "year",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "type": "equals",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "value": 2012</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp }</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp ],</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "data": {</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "volume": 5,</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "category": "organic"</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp }</h5>
+          <h5>}</h5>
+        </div>
+      </div>
+      <div class="column" style="background-color:#aaa;"> 
+        <h2>Delete</h2>
+        <br>
+        <div style="background-color:#e8e8e8; padding: 10px;">
+          <h5>{</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "delete",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "status": "submitted",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "params": [</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "column": "year",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "type": "equals",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "value": 2012</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp },</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "column": "total_4046",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "type": "less_equal",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "value": 700</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp }</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp ]</h5>
+          <h5>}</h5>
+        </div>
+      </div>
+      </div>
+      <form id="myForm" class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post">
+        <div class="form-group">
+          <h2> JSON Entry </h2>
+          <textarea type="text" class="form-control" id="region"  name="jsonData" row="30" cols="65"></textarea>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit"  class="btn btn-default"  value="Submit">
+          </div>
+        </div>
+      </form>
+    </div>    
+{% endblock %}

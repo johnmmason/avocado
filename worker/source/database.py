@@ -133,5 +133,4 @@ def delete(params):
 
     cursor.close()
     conn.commit()
-    conn.close()
-    
+    conn.close()   
