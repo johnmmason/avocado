@@ -20,8 +20,8 @@ def insert():
 
 @app.route('/getJobs', methods=['GET'])
 def jobs_page():
-    jobsData = 
-    return render_template('jobs.html')
+    jobsData = get_jobs()
+    return render_template('jobs.html', data=jobsData)
 
 
 @app.route('/jobs', methods=['POST'])
