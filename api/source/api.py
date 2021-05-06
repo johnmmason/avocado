@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request, render_template, send_file
+from flask import Flask, request, render_template, send_file, abort
 from config import Config
 from forms import submitInsertForm, submitQueryForm, submitDeleteForm, submitUpdateForm
 import jobs
@@ -52,8 +52,11 @@ def get_jobs():
 
 @app.route('/download/<jid>', methods=['GET'])
 def download(jid):
-    IMG_PATH = jobs.get_plot(jid)
-    return send_file(IMG_PATH, mimetype='image/png')
-
+    try:
+        IMG_PATH = jobs.get_plot(jid)
+        return send_file(IMG_PATH, mimetype='image/png')
+    except:
+        return abort(404)
+    
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
