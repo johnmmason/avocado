@@ -59,7 +59,7 @@ def update_job(job, params): # startFin is a string either 'start' or 'end'
     for key in params.keys():
         job[key] = params[key]
 
-    _save_job( _generate_job_key(job['id']), job )
+    _save_job( _generate_job_key(job['job_id']), job )
 
 # return all jobs in the redis database
 def get_jobs():

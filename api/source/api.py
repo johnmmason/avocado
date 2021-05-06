@@ -20,7 +20,7 @@ def insert():
 
 @app.route('/getJobs', methods=['GET'])
 def jobs_page():
-    jobsData = get_jobs()
+    jobsData = json.loads(get_jobs())
     return render_template('jobs.html', data=jobsData)
 
 
@@ -36,7 +36,8 @@ def add_job():
       jobData = jobs.get_job(jobData['job_id'])
       time.sleep(2)
     jobData = json.dumps(jobs.get_job(jobData['job_id']))
-    return render_template('formReturn.html', job_type = jsonData['job_id'], data = jobData)
+    jsonData = json.loads(jobData)
+    return render_template('formReturn.html', job_type = jsonData['job_type'], data = jobData)
 
 @app.route('/get_jobs', methods=['GET'])
 def get_jobs():

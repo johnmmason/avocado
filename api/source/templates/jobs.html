@@ -7,7 +7,10 @@
       <p>Below is a listing of all the job requests and their details that are currently stored in the Redis database </p>
       <br>
       <br>
-      <p>{{ data }}</p>
-      
+      <ol>
+      {% for key,value in data.items(): %}
+          <li> {"{{ key }}" : {{ value }} } </li><br>
+      {% endfor %}
+      </ol>
     </div>    
 {% endblock %}

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: postgres
 data:
-  POSTGRES_DB: postgresdb
-  POSTGRES_USER: jmmpahcoe
+  POSTGRES_DB: avocado
+  POSTGRES_USER: avocado
   POSTGRES_PASSWORD: avocado
   PGDATA: /var/lib/postgresql/data/pgdata
