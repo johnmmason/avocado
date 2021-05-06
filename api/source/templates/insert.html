@@ -1,125 +1,88 @@
 {% extends "base.html" %}
 
-{% block content %}
-    <!--<h2> Insert Form</h2>
-    <form action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.job_type.label}}<br>
-            {{ form.job_type(size=32) }}
-        </p>
-        <p>
-            {{ form.week_id.label}}<br>
-            {{ form.week_id(size=32) }}
-        </p>
-        <p>
-            {{ form.week.label}}<br>
-            {{ form.job_type(size=32) }}
-        </p>
-        <p>
-            {{ form.price.label}}<br>
-            {{ form.price(size=32) }}
-        </p>
-        <p>
-            {{ form.volume.label}}<br>
-            {{ form.volume(size=32) }}
-        </p>
-        <p>
-            {{ form.total_4046.label}}<br>
-            {{ form.total_4046(size=32) }}
-        </p>
-        <p>
-            {{ form.total_4225.label}}<br>
-            {{ form.total_4225(size=32) }}
-        </p>
-        <p>
-            {{ form.total_4770.label}}<br>
-            {{ form.total_4770(size=32) }}
-        </p>
-        <p>
-            {{ form.category.label}}<br>
-            {{ form.category(size=32) }}
-        </p>
-        <p>
-            {{ form.year.label}}<br>
-            {{ form.year(size=32) }}
-        </p>
-        <p>
-            {{ form.region.label}}<br>
-            {{ form.region(size=32) }}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>-->
+{% block content %} 
+   <script type="text/javascript">
+     function submitform(){
+        var formData = JSON.stringify($("#myForm").serializeArray());
+        console.log(formData);
+        $.ajax({
+          type: "POST",
+          url: "https://isp-proxy.tacc.utexas.edu/phart/jobs",
+          data: formData,
+          dataType: "json",
+          contentType : "application/json"
+        });
+        alert("sent json data");
+      }
+    </script> 
     <div class="container">
       <h2>Insert Form</h2>
       <br>
       <p>Fill in all sections in order to create a new entry into the Postgres database through an insert job request </p>
       <br>
-      <form class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post">
-        <input type="hidden" id="job_type" name="job_type" value="insert">
+      <form id="myForm" class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post">
+        <!--<input type="hidden" id="job_type" name="job_type" value="insert">
         <div class="form-group">
-          <label class="control-label col-sm-2" for="week_id">Week ID</label>
+          <label class="control-label col-sm-2" for="data[week_id]">Week ID</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="week_id" placeholder="1" name="week_id">
+            <input type="text" class="form-control" id="week_id" placeholder="1" name="data[week_id]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="week">Week</label>
+          <label class="control-label col-sm-2" for="data[week]">Week</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="week" placeholder="mm/dd/yy" name="week">
+            <input type="text" class="form-control" id="week" placeholder="mm/dd/yy" name="data[week]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="price">Price</label>
+          <label class="control-label col-sm-2" for="data[price]">Price</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="price" placeholder="$$$" name="price">
+            <input type="text" class="form-control" id="price" placeholder="$$$" name="data[price]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="volume">Volume</label>
+          <label class="control-label col-sm-2" for="data[volume]">Volume</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="volume" placeholder="123" name="volume">
+            <input type="text" class="form-control" id="volume" placeholder="123" name="data[volume]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="total_4046">Total 4046</label>
+          <label class="control-label col-sm-2" for="data[total_4046]">Total 4046</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="total_4046" placeholder="123" name="total_4046">
+            <input type="text" class="form-control" id="total_4046" placeholder="123" name="data[total_4046]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="total_4225">Total 4225</label>
+          <label class="control-label col-sm-2" for="data[total_4225]">Total 4225</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="total_4225" placeholder="123" name="total_4225">
+            <input type="text" class="form-control" id="total_4225" placeholder="123" name="data[total_4225]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="total_4770">Total 4770</label>
+          <label class="control-label col-sm-2" for="data[total_4770]">Total 4770</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="total_4770" placeholder="123" name="total_4770">
+            <input type="text" class="form-control" id="total_4770" placeholder="123" name="data[total_4770]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="category">Category</label>
+          <label class="control-label col-sm-2" for="data[category]">Category</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="category" placeholder="conventional" name="category">
+            <input type="text" class="form-control" id="category" placeholder="conventional" name="data[category]">
           </div>
         </div>
         <div class="form-group">
-          <label class="control-label col-sm-2" for="year">Year</label>
+          <label class="control-label col-sm-2" for="data[year]">Year</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="year" placeholder="1" name="year">
+            <input type="text" class="form-control" id="year" placeholder="1" name="data[year]">
           </div>
-        </div>
+        </div>-->
         <div class="form-group">
-          <label class="control-label col-sm-2" for="region">Region</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="region" placeholder="Atlanta" name="region">
-          </div>
+          <label class="control-label col-sm-2" for="jsonData">Test</label>
+          <textarea type="text" class="form-control" id="region"  name="jsonData" row="6" cols="65"></textarea>
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Submit</button>
+            <input type="submit"  class="btn btn-default"  value="Submit">
           </div>
         </div>
       </form>

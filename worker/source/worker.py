@@ -7,8 +7,8 @@ def run_job(jid):
     job = get_job(jid)
     job_type = job['job_type']
 
-    print("Accepted job " + job['id'] + ".")
-    
+    print("Accepted job " + job['job_id'] + ".")
+   
     if job_type == "insert":
         
         try:

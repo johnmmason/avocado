@@ -1,8 +1,9 @@
 import json
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from config import Config
 from forms import submitInsertForm, submitQueryForm, submitDeleteForm, submitUpdateForm
 import jobs
+import time
 
 app = Flask(__name__)
 
@@ -45,11 +46,13 @@ def entries():
 @app.route('/jobs', methods=['POST'])
 def add_job():
     try:
-        job = request.form.to_dict()
+        job = json.loads(request.form.get('jsonData'))
     except Exception as e:
         return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
     jsonData = jobs.add_job(job)
-    return render_template('formReturn.html', job_type = request.form.get('job_type'), data = jsonData)
+    
+    jobData = json.dumps(jobs.get_job(jsonData['job_id']))
+    return render_template('formReturn.html', job_type = jsonData['job_id'], data = jobData)
 
 @app.route('/get_jobs', methods=['GET'])
 def get_jobs():
