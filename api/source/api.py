@@ -1,5 +1,5 @@
 import json
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, send_file
 from config import Config
 from forms import submitInsertForm, submitQueryForm, submitDeleteForm, submitUpdateForm
 import jobs
@@ -49,14 +49,22 @@ def add_job():
         job = json.loads(request.form.get('jsonData'))
     except Exception as e:
         return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
-    jsonData = jobs.add_job(job)
+    jobData = jobs.add_job(job)
     
-    jobData = json.dumps(jobs.get_job(jsonData['job_id']))
+    while(jobData['status']=='submitted'):
+      jobData = jobs.get_job(jobData['job_id'])
+      time.sleep(2)
+    jobData = json.dumps(jobs.get_job(jobData['job_id']))
     return render_template('formReturn.html', job_type = jsonData['job_id'], data = jobData)
 
 @app.route('/get_jobs', methods=['GET'])
 def get_jobs():
     return json.dumps(jobs.get_jobs())
+
+@app.route('/download/<jid>', methods=['GET'])
+def download(jid):
+    IMG_PATH = jobs.get_plot(jid)
+    return send_file(IMG_PATH, mimetype='image/png')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
