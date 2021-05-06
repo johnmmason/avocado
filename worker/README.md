@@ -201,6 +201,10 @@ Each parameter must be defined with keys `{column, type, value}`.  Supported ope
 }
 ```
 
+Once complete, the plot can be accessed using the assigned job id or image id:
+
+In your browser, navigate to `https://isp-proxy.tacc.utexas.edu/phart/download/<jobid>`.
+
 ### Summary
 
 The summary job type returns the summary statistics mean, median, std deviation, 25% quantile, 50% quantile, 75% quantile, and count for each specified column.
