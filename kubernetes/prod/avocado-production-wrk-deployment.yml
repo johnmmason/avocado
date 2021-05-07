@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avocado-production-worker-deployment
+  labels:
+    app: avocado-production-worker
+    username: phart
+    env: production
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: avocado-production-worker
+  template:
+    metadata:
+      labels:
+        app: avocado-production-worker
+        username: phart
+        env: production
+    spec:
+      containers:
+        - name: avocado-production-worker-container
+          imagePullPolicy: Always
+          image: phart26/avocado-production-wrk:latest
+          ports:
+            - name: http
+              containerPort: 5000
+          env:
+            - name: "PG_HOST"
+              value: "10.100.120.60"
+            - name: "PG_USER"
+              value: "avocado"
+            - name: "PG_PASSWORD"
+              value: "avocado"
+            - name: "PG_DATABASE"
+              value: "avocado"
+            - name: "REDIS_HOST"
+              value: "10.110.128.5"
