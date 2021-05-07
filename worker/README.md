@@ -179,7 +179,7 @@ The plot job type creates a basic plot defined by the given parameters:
 
 | Key | Value |
 | --- | ----- |
-| plot_type | A string, one of `{bar, line, plot}`. |
+| plot_type | A string, one of `{bar, line, box}`. |
 | cols | A list of exactly two column names in the format `[ x-axis, y-axis ]`. |
 | params | A list with any number of query parameters. See below. |
 
