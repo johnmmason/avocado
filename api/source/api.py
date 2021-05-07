@@ -18,6 +18,10 @@ def index():
 def insert():
     return render_template('formSubmit.html')
 
+@app.route('/analytics')
+def analytics():
+    return render_template('analytics.html')
+
 @app.route('/getJobs', methods=['GET'])
 def jobs_page():
     jobsData = json.loads(get_jobs())
@@ -36,6 +40,12 @@ def add_job():
       time.sleep(2)
     jobData = json.dumps(jobs.get_job(jobData['job_id']))
     jsonData = json.loads(jobData)
+    
+    # render a different form for a plot
+    if (jsonData['job_type'] == 'plot'):
+      job_link = "https://isp-proxy.tacc.utexas.edu/phart/download/" + jsonData['job_id']
+      return render_template('plot.html', job_id = jsonData['job_id'], job_link = job_link)
+    
     return render_template('formReturn.html', job_type = jsonData['job_type'], data = jobData)
 
 @app.route('/raw_jobs', methods=['POST'])
@@ -49,6 +59,17 @@ def raw_job():
 @app.route('/get_jobs', methods=['GET'])
 def get_jobs():
     return json.dumps(jobs.get_jobs())
+
+@app.route('/get_job', methods=['POST'])
+def get_job_form():
+    job_dict = jobs.get_jobs()
+    jid = request.form.get('jsonData')
+    try:
+        strJob = json.dumps(job_dict[ jobs._generate_job_key(jid) ])
+        jsonData = json.loads(strJob)
+        return render_template('jobReturn.html',jsonData = jsonData, data = strJob)
+    except:
+        return abort(404)
 
 @app.route('/get_job/<jid>', methods=['GET'])
 def get_job(jid):

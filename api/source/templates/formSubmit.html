@@ -25,16 +25,56 @@
     }
     </style> 
     <div class="container">
-      <h2>Submit Form</h2>
+      <h2>Submit Form CRUD</h2>
       <br>
       <p>Copy and paste the json format of a request type into the text box and edit to desired request (ie. Insert, Query, Update, Delete)</p>
       <br>
-      <h3>JSON Formats</h3>
       <br>
-      <div class="row">
-      <div class="column" style="background-color:#aaa;"> 
-        <h2>Insert</h2>
+      <form id="myForm" class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post">
+        <div class="form-group">
+          <h2> JSON Entry </h2>
+          <textarea type="text" class="form-control" id="region"  name="jsonData" row="30" cols="65"></textarea>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit"  class="btn btn-default"  value="Submit">
+          </div>
+        </div>
+      </form>
+      <br>
+      <br>
+      <h2>JSON Formats</h2>
+      <br>
+      <div class="row"> 
+        <h3>Insert</h3>
         <br>
+        <p>The insert job type adds a single row to the database.</p>
+        <br>
+        <h4> Input Requirements: </h4>
+        <br>
+        <p>A parameter data with a key-value dictionary of all columns in the table and the values to be added.</p>
+        <br>
+        <br>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>data</td>
+                <td>A key-value dictionary of all columns in the table and the values to be added</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <h4>Example:</h4> 
+        </div>
+        <br>
+        <div class="column">
         <div style="background-color:#e8e8e8; padding: 10px;">
           <h5>{</h5>
           <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "insert",</h5>
@@ -54,9 +94,42 @@
           <h5>}</h5>
         </div>
       </div>
-      <div class="column" style="background-color:#aaa;"> 
-        <h2>Query</h2>
+      </div>
+      <br>
+      <br>
+      <div class="row"> 
+        <h3>Query</h3>
         <br>
+        <p>The query job type retrieves a subset of the database matching given parameters.</p>
+        <br>
+        <h4> Query Requirements: </h4>
+        <br>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>cols</td>
+                <td>A list of columns to return</td>
+              </tr>
+              <tr>
+                <td>params</td>
+                <td>A list with any number of query parameters</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <p>Each parameter must be defined with keys {column, type, value}. Supported operators are equals, greater_than, greater_equal, less_than, less_equal</p>
+          <br>
+          <h4>Example:</h4> 
+        </div>
+        <br>
+        <div class="column">
         <div style="background-color:#e8e8e8; padding: 10px;">
           <h5>{</h5>
           <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "query",</h5>
@@ -77,9 +150,42 @@
           <h5>}</h5>
         </div>
       </div>
-      <div class="column" style="background-color:#aaa;"> 
-        <h2>Update</h2>
+      </div>
+      <br>
+      <br>
+      <div class="row"> 
+        <h3>Update</h3>
         <br>
+        <p>The update job type modifies a subset of the database matching given parameters</p>
+        <br>
+        <h4> Update Requirements: </h4>
+        <br>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>params</td>
+                <td>A list with any number of query parameters</td>
+              </tr>
+              <tr>
+                <td>data</td>
+                <td>A key-value dictionary of columns to be updated</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <p>Each parameter must be defined with keys {column, type, value}. Supported operators are equals, greater_than, greater_equal, less_than, less_equal</p>
+          <br>
+          <h4>Example:</h4> 
+        </div>
+        <br>
+        <div class="column">
         <div style="background-color:#e8e8e8; padding: 10px;">
           <h5>{</h5>
           <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "update",</h5>
@@ -98,9 +204,41 @@
           <h5>}</h5>
         </div>
       </div>
-      <div class="column" style="background-color:#aaa;"> 
-        <h2>Delete</h2>
+      </div>
+      <br>
+      <br>
+      <div class="row"> 
+        <h3>Delete</h3>
         <br>
+        <p>The delete job type removes all rows from the database which match given parameters.</p>
+        <br>
+        <h4> Delete Requirements: </h4>
+        <br>
+        <p>The delete job accepts a list of parameters params</p>
+        <br>
+        <br>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>params</td>
+                <td>A list with any number of query parameters</td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <p>Each parameter must be defined with keys {column, type, value}. Supported operators are equals, greater_than, greater_equal, less_than, less_equal</p>
+          <br>
+          <h4>Example:</h4> 
+        </div>
+        <br>
+        <div class="column">
         <div style="background-color:#e8e8e8; padding: 10px;">
           <h5>{</h5>
           <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "delete",</h5>
@@ -121,16 +259,82 @@
         </div>
       </div>
       </div>
-      <form id="myForm" class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post">
-        <div class="form-group">
-          <h2> JSON Entry </h2>
-          <textarea type="text" class="form-control" id="region"  name="jsonData" row="30" cols="65"></textarea>
+      <br>
+      <br>
+      <div class="row"> 
+        <h2>Column Information</h2>
+        <br>
+        <p>Below is a list of the columns in the database and a little information about them</p>
+        <br>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Column Name</th>
+                <th>Datatype</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>id</td>
+                <td>SERIAL</td>
+                <td>PRIMARY KEY</td>
+              </tr>
+              <tr>
+                <td>week_id</td>
+                <td>INTEGER</td>
+                <td>0-51 where 51 is the first week of the year</td>
+              </tr>
+              <tr>
+                <td>week</td>
+                <td>DATE</td>
+                <td>The first day of the week</td>
+              </tr>
+              <tr>
+                <td>price</td>
+                <td>REAL</td>
+                <td>TW average price</td>
+              </tr>
+              <tr>
+                <td>volume</td>
+                <td>REAL</td>
+                <td>TW sales</td>
+              </tr>
+              <tr>
+                <td>total_4046</td>
+                <td>REAL</td>
+                <td>TW sales of PLU 4046</td>
+              </tr>
+              <tr>
+                <td>total_4225</td>
+                <td>REAL</td>
+                <td>TW sales of PLU 4225</td>
+              </tr>
+              <tr>
+                <td>total_4770</td>
+                <td>REAL</td>
+                <td>TW sales of PLU 4770</td>
+              </tr>
+              <tr>
+                <td>category</td>
+                <td>VARCHAR(20)</td>
+                <td>{ conventional, organic }</td>
+              </tr>
+              <tr>
+                <td>year</td>
+                <td>INTEGER</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>region</td>
+                <td>VARCHAR(20)</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <input type="submit"  class="btn btn-default"  value="Submit">
-          </div>
-        </div>
-      </form>
+        <br>
+        <br> 
     </div>    
 {% endblock %}

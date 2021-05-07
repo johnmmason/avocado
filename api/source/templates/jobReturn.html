@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+    </div>
+    <div class="col-sm-8 text-left">
+      <h1>Job was a {{ jsonData['status'] }} {{ jsonData['job_type'] }} !</h1> <br>
+      <br>
+      <br>
+      <div style="background:#7bc59c; padding:70px;">
+        <div style="background:#dcdcdc; padding:20px; margin:30px;">
+          <p>{{ data }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-2 sidenav">
+    </div>
+  </div>
+</div>
+   
+{% endblock %}
