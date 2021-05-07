@@ -53,7 +53,7 @@ def raw_job():
     try:
         job = request.get_json(force=True)
     except Exception as e:
-        return True, json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
+        return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
     return json.dumps(jobs.add_job(job))
 
 @app.route('/get_jobs', methods=['GET'])
