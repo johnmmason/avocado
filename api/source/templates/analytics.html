@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block content %}  
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Create four equal columns that floats next to each other */
+    .column {
+      float: left;
+      width: 50%;
+      padding: 10px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    h5 {
+      font-size: 12px;
+      font-weight: bold;  
+    }
+    </style> 
+    <div class="container">
+      <h2>Submit Form Analytics</h2>
+      <br>
+      <p>Copy and paste the json format of a request type into the text box and edit to desired request (ie. Plot and Summary)</p>
+      <br>
+      <br>
+      <form id="myForm" class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/jobs" method="post">
+        <div class="form-group">
+          <h2> JSON Entry </h2>
+          <textarea type="text" class="form-control" id="region"  name="jsonData" row="30" cols="65"></textarea>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit"  class="btn btn-default"  value="Submit">
+          </div>
+        </div>
+      </form>
+      <br>
+      <br>
+      <h2>JSON Formats</h2>
+      <br>
+      <div class="row">
+       <h3>Plot</h3>
+        <br>
+        <p>The plot job type creates a basic plot defined by the given parameters:</p>
+        <br>
+        <h4> Plot Requirements: </h4>
+        <br>
+        <div>
+          <table class="table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>plot_type</td>
+              <td>A string, one of {bar, line, plot}</td>
+            </tr>
+            <tr>
+              <td>cols</td>
+              <td>A list of exactly two column names in the format [ x-axis, y-axis ]</td>
+            </tr>
+            <tr>
+              <td>params</td>
+              <td>A list with any number of query parameters. See Above.</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <p>Each parameter must be defined with keys {column, type, value}. Supported operators are equals, greater_than, greater_equal, less_than, less_equal.</p>
+        <br>
+        <h4>Example:</h4>
+      </div>
+      <div class="column"> 
+        <div style="background-color:#e8e8e8; padding: 10px;">
+          <h5>{</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "plot",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "plot_type": "box",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "status": "submitted",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "cols": ["year", "price"],</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "params": [{</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "column": "year",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "type": "greater_than",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp "value": 2012</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp }]</h5> 
+          <h5>}</h5>
+        </div>
+      </div> 
+      </div>
+      <br>
+      <br>
+      <div class="row"> 
+        <h3>Summary</h3>
+        <br>
+        <p>The summary job type returns the summary statistics mean, median, std deviation, 25% quantile, 50% quantile, 75% quantile, and count for each specified column.</p>
+        <br>
+        <h4> Summary Requirements: </h4>
+        <br>
+        <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>cols</td>
+              <td>A list of column names</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <br>
+        <br>
+        <h4>Example:</h4>
+        <br>
+        <div style="background-color:#e8e8e8; padding: 10px;">
+          <h5>{</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "job_type": "summary",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "status": "submitted",</h5>
+          <h5>&nbsp &nbsp &nbsp &nbsp "cols": ["year", "price"]</h5> 
+          <h5>}</h5>
+        </div>
+      </div> 
+    </div>
+    <br>
+    <br>    
+{% endblock %}

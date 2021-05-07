@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avocado-production-redis-pvc-deployment
+  labels:
+    app: avocado-production-redis
+    username: phart
+    env: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avocado-production-redis
+  template:
+    metadata:
+      labels:
+        app: avocado-production-redis
+    spec:
+      containers:
+        - name: avocado-production-redis-container
+          image: phart26/avocado-production-db:latest
+          imagePullPolicy: Always
+          command: ["redis-server"]
+          volumeMounts:
+          - name: avocado-production-redis-pvc
+            mountPath: "/data"
+          ports:
+            - name: redis
+              containerPort: 6379
+      volumes:
+      - name: avocado-production-redis-pvc
+        persistentVolumeClaim:
+          claimName: avocado-production-redis-pvc

@@ -1,12 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="container">
-      <h2>Jobs</h2>
+    <div class="container"> 
+      <form id="myForm" class="form-horizontal" action="https://isp-proxy.tacc.utexas.edu/phart/get_job" method="post">
+        <div class="form-group">
+          <h2> Job Entry </h2>
+          <br>
+          <p> Copy and paste a job id into the text box below and submit to filter to that job</p>
+          <br>
+          <textarea type="text" class="form-control" id="data"  name="jsonData" row="30" cols="65"></textarea>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit"  class="btn btn-default"  value="Submit">
+          </div>
+        </div>
+      </form>
+      <br>
+      <br>
+      <h2>Jobs Database</h2>
       <br>
       <p>Below is a listing of all the job requests and their details that are currently stored in the Redis database </p>
       <br>
-      <br>
+      <br> 
       <ol>
       {% for key,value in data.items(): %}
           <li> {"{{ key }}" : {{ value }} } </li><br>

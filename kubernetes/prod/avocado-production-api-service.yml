@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: avocado-production-flask-service
+  labels:
+    env: production
+spec:
+  type: ClusterIP
+  selector:
+    app: avocado-production-flask
+  ports:
+  - name: flask-port
+    port: 5000
+    targetPort: 5000

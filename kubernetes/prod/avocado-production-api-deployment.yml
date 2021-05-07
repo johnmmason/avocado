@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: avocado-production-flask-deployment
+  labels:
+    app: avocado-production-flask
+    username: phart
+    env: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: avocado-production-flask
+  template:
+    metadata:
+      labels:
+        app: avocado-production-flask
+        username: phart
+        env: production
+    spec:
+      containers:
+        - name: avocado-production-flask
+          imagePullPolicy: Always
+          image: phart26/avocado-production-api:latest
+          ports:
+            - name: flask
+              containerPort: 5000
+          env:
+            - name: "REDIS_HOST"
+              value: "10.110.128.5"
