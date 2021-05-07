@@ -180,7 +180,7 @@ Successfully tagged johnmmason/avocado-postgres:latest
 
 Here the docker image for postgres uses a schema.sql file to build the avocado database, that way when the postgress deployment pulls the postgres image it has access to this newely created database with the data from avocado.csv already imported in the database.
 
-####Pushing the Images to Docker Hub
+#### Pushing the Images to Docker Hub
 
 To push the newely built images to docker hub, run a docker push command
 ```
@@ -198,7 +198,7 @@ Successfully pushed phart26/avocado-test-wrk:latest
 Successfully pushed johnmmason/avocado-postgres:latest
 ```
 
-####Deploying yml Files
+#### Deploying yml Files
 Navigate to the kubernetes subdirectory and all the yml files in either the test or prod folders can be run using a kubectl apply command.
 
 ```
